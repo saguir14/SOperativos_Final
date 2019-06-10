@@ -16,3 +16,7 @@ en el programa.
 
 Dentro del programa no fueron utilizadas bibliotecas fuera de lo normal y que ya han sido utilizadas, iostream
 manejo de semáforos, entre otras. 
+
+- Camilo Paez
+- Santiago Aguirre
+- Cristian Villamizar

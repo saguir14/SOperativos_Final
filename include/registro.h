@@ -1,0 +1,1 @@
+void registrar(char**, int*);

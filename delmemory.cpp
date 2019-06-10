@@ -5,8 +5,8 @@
 #include <cstdlib>
 #include <cstring>
 #include <semaphore.h>
-#include "registros.h"
-#include "delmemory.h"
+#include "include/registros.h"
+#include "include/delmemory.h"
 
 using namespace std;
 
@@ -50,7 +50,6 @@ del(const char * n) {
      
 
     }
-    cout << "eliminando"<< endl;
 
   
 

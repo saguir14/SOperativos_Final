@@ -1,15 +1,14 @@
-all: evaluator registro 
+all: evaluator 
 
-evaluator:  evaluator.o init.o delmemory.o
-	g++ -g -o evaluator init.o delmemory.o evaluator.o  -lrt -lpthread
-
-registro: registro.o 
-	g++ -g -o registro registro.o -lrt -lpthread
-
+evaluator:  evaluator.o init.o delmemory.o registro.o ctrl.o 
+	g++ -g -o evaluator init.o ctrl.o delmemory.o evaluator.o registro.o -lrt -lpthread
 
 evaluator.o: evaluator.cpp 
 	g++ -g -c evaluator.cpp
 	
+ctrl.o: ctrl.cpp 
+	g++ -g -c ctrl.cpp
+
 init.o: init.cpp 
 	g++ -g -c init.cpp
 

@@ -6,10 +6,10 @@
 #include <iostream>
 #include <unistd.h>
 #include <sys/types.h>
-#include "registros.h"
-#include "init.h"
-
-//#include "ctlr_command.h"
+#include "include/registros.h"
+#include "include/init.h"
+#include "include/registro.h"
+#include "include/ctrl.h"
 //#include "rep_command.h"
 //#include "stop_command.h"
 
@@ -21,10 +21,13 @@ void comando_evaluador(char** comandos, int* length){
     char* comando_actual = comandos[1];
     if (strcmp(comando_actual,"init") == 0){
         comando_init(comandos, length);
-    /* }else if (strcmp(comando_actual,"reg") == 0){
-        //cout<<"comando reg\n";
+    }else if (strcmp(comando_actual,"reg") == 0){
+        registrar(comandos, length);
+     
     }else if (strcmp(comando_actual,"ctlr") == 0){
-        comando_ctlr(comandos, length);
+        control(comandos, length);
+        
+    /*
     }else if (strcmp(comando_actual,"rep") == 0){
         //cout<<"comando rep\n";
     }else if(strcmp(comando_actual, "stop") == 0){

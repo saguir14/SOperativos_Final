@@ -1,1 +1,0 @@
-void comando_init(char**, int*);

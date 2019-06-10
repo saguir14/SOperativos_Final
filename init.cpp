@@ -151,56 +151,7 @@ void comando_init(char** comandos, int* length){
     pHead->b = b;
     pHead->s = s;
     pHead->q = q; 
-/*
-    dir=(void *)(((char *)dir)+size_head);
-   
-    int size_in=ie*size_exam;
-    int size_ou=oe*size_exam;
-    int con=-1;
-    exam *pExam = (exam * )dir;
-   //inicializar
-    for(int tt=0; tt<(i); tt++){
 
-        for(int tt2=0; tt2<ie; tt2++){
-            pExam = (exam * )dir;
-            pExam->bandeja=-1;
-            pExam->cantidad=-1;
-            pExam->state=-1;
-            pExam->tipo='N';
-            pExam->id=con;
-            con--;
-            
-            dir=(void *)(((char *)dir)+size_in*tt+tt2*size_exam);
-        }
-
-    }
-    
-    //imprimir
-    if ((dir = mmap(NULL, size_head, PROT_READ | PROT_WRITE, MAP_SHARED,
-		fd, 0)) == MAP_FAILED) {
-        cerr << "Error mapeando la memoria compartida: "
-	    << errno << strerror(errno) << endl;
-        exit(EXIT_FAILURE);
-    }
-    dir=(void *)(((char *)dir)+size_head);
-    
-    for(int tt=0; tt<(i); tt++){
-
-        for(int tt2=0; tt2<ie; tt2++){
-        pExam = (exam * )dir;
-        cout <<pExam->bandeja<<" ";
-        cout <<pExam->cantidad<<" ";
-        cout <<pExam->state<<" ";
-        cout <<pExam->tipo<<" ";
-        cout <<pExam->id<<endl;
-        
-        dir=(void *)(((char *)dir)+size_in*tt+tt2*size_exam);
-        }
-        cout <<endl;
-
-    }
-    
-    */
     close(fd);
 }
 

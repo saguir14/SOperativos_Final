@@ -26,7 +26,7 @@ void comando_evaluador(char** comandos, int* length){
      
     }else if (strcmp(comando_actual,"ctlr") == 0){
         control(comandos, length);
-        
+                
     /*
     }else if (strcmp(comando_actual,"rep") == 0){
         //cout<<"comando rep\n";

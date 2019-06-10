@@ -5,18 +5,28 @@
 #include <sys/stat.h>
 #include <sys/types.h>
 #include <semaphore.h>
-#include "registros.h"
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <vector>
+#include "registros.h"
+#include "init.h"
+#include <string>
+#include "delmemory.h" 
 
 using namespace std;
 
-//#include "comando_init.h"
+
 //Read all the comandos 
-void comando_init(char* comandos[], int* length){
+void comando_init(char** comandos, int* length){
+
+    
+    
+
+
     int i=5, ie=6, oe=10, b=100, d=100, s=100, q=6;
     char *n = (char*)"evaluator";
+    
     if (*length == 2){
     }
     else if(*length%2 != 0){
@@ -79,19 +89,47 @@ void comando_init(char* comandos[], int* length){
             }
         }
     }
+    //reiniciar semaphores
+    del(n);
+
+    //semaphores
+    vector<sem_t *> mutex;
+    vector<sem_t *> full;
+    vector<sem_t *> empty;
+    
+    for (int iteration=0; iteration<i; iteration++){
+
+        string mutex_n =("inp_"+ to_string(iteration)+"_mutex").c_str();
+        string full_n =("inp_"+ to_string(iteration)+"_full").c_str();
+        string empty_n =("inp_"+to_string(iteration)+"_empty").c_str();
+
+        
+
+        sem_t *newmutex = sem_open(mutex_n.c_str(), O_CREAT | O_EXCL, 0660, 1);
+        sem_t *newfull = sem_open(full_n.c_str(), O_CREAT | O_EXCL, 0660, 0);
+        sem_t *newempty =sem_open(empty_n.c_str(), O_CREAT | O_EXCL, 0660, ie);
+
+
+        mutex.push_back(newmutex);
+        full.push_back(newfull); 
+        empty.push_back(newempty); 
+
+    }
+    
+
     // Crear la memoria compartida e inicializar los valores
-    int fd = shm_open(n, O_RDWR | O_CREAT | O_EXCL, 0660);
+    int fd = shm_open(n, O_RDWR | O_CREAT | O_TRUNC, 0660);
     if (fd < 0) {
-        cerr << "Error creando la memoria compartida: "<< endl;
+        cerr << "Error creando la memoria compartida: inicial"<< endl;
         exit(EXIT_FAILURE);
     }
 
     int size_head =  sizeof(struct head);
     int size_exam =  sizeof(struct exam);
 
-    cout<<size_head <<endl;
-    if (ftruncate(fd, size_head + i*ie*size_exam) != 0) {
-        cerr << "Error creando la memoria compartida: "
+
+    if (ftruncate(fd, size_head + i*ie*size_exam + oe*size_exam + q*3*size_exam) != 0) {
+        cerr << "Error creando la memoria compartida: truncate"
 	    << errno << strerror(errno) << endl;
         exit(EXIT_FAILURE);
     }
@@ -105,35 +143,16 @@ void comando_init(char* comandos[], int* length){
     }
 
     head *pHead = (head * )dir;
-    cout<<"Head"<<endl;
+    
     pHead->i = i;
-    pHead->ie = ie; 
-    cout<<(pHead->i)<<endl;
-    cout<<pHead<<endl;
-    cout<<dir<<endl;
+    pHead->ie = ie;
+    pHead->oe = oe;
+    pHead->n = n;
+    pHead->b = b;
+    pHead->s = s;
+    pHead->q = q; 
 
-    for(int it=0; it<i; it++){
-        for(int it2=0; it2<ie; it2++){
-            if ((dir = mmap(0,size_exam, PROT_READ | PROT_WRITE, MAP_SHARED,
-		        fd, 0)) == MAP_FAILED) {
-                cerr << "Error mapeando la memoria compartida: "
-	            << errno << strerror(errno) << endl;
-                exit(EXIT_FAILURE);
-            }
-        }
-    }
-
-    for(int it=0; it<oe; it++){
-        if ((dir = mmap(0,size_exam, PROT_READ | PROT_WRITE, MAP_SHARED,
-		        fd, 0)) == MAP_FAILED) {
-                cerr << "Error mapeando la memoria compartida: "
-	            << errno << strerror(errno) << endl;
-                exit(EXIT_FAILURE);
-            }
-    }
-    exam *pExam = (exam *)dir;
-    cout<<"Examen"<<endl;
-    cout<<&(pExam->id)<<endl;
-    cout<<pExam<<endl;
     close(fd);
 }
+
+

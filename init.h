@@ -1,2 +1,1 @@
-
-void comando_init(char* comandos[], int* length);
+void comando_init(char**, int*);

@@ -1,15 +1,15 @@
 #pragma once
 
-
 struct head {
-  int i;
-  int ie;
+  int i, ie, oe, b, d, s, q;
+  char *n;
 };
 
+
 struct exam {
-  string id;
-  int bandeja;
-  string tipo;
-  int cantidad;
   
+  int  bandeja, cantidad;
+  char tipo;
+  const char * id;
+
 };

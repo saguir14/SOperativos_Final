@@ -8,13 +8,16 @@
 #include <sys/types.h>
 #include "registros.h"
 #include "init.h"
+
 //#include "ctlr_command.h"
 //#include "rep_command.h"
 //#include "stop_command.h"
 
 using namespace std;
 
-void comando_evaluador(char* comandos[], int* length){
+
+void comando_evaluador(char** comandos, int* length){
+   
     char* comando_actual = comandos[1];
     if (strcmp(comando_actual,"init") == 0){
         comando_init(comandos, length);
@@ -30,10 +33,12 @@ void comando_evaluador(char* comandos[], int* length){
         cerr<<"Comando " << comando_actual << " no encontrado\n";
         exit(EXIT_FAILURE);
     }
+    
 }
-
 int
 main(int argc, char* argv[]){
     comando_evaluador(argv,&argc);
     exit(EXIT_SUCCESS);
+    return 0;
 }
+

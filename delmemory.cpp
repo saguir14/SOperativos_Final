@@ -16,8 +16,9 @@ del(const char * n) {
    int fd = shm_open(n, O_RDWR, 0660);
     if (fd < 0) {
         cerr << "Error abriendo la memoria compartida:en registro " << errno << strerror(errno) << endl;
-        exit(1);
+        
     }
+    else{
     //obtener variables
     int i, ie;
 
@@ -49,6 +50,7 @@ del(const char * n) {
 
      
 
+    }
     }
 
   
